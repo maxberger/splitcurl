@@ -73,9 +73,13 @@ while jobs | grep -q Running;do
  sleep 1
 done
 calc
-echo "Downloading $FILENAME in $SPLITNUM parts: $GOTSIZE / $SIZE bytes @ $RATE kb/s ($PCT%).    "
+echo "Downloaded  $FILENAME in $SPLITNUM parts: $GOTSIZE / $SIZE bytes @ $RATE kb/s ($PCT%).    "
  
 #Join all the parts
-eval cat /tmp/$FILENAME.{1..$SPLITNUM} > $FILENAME
+echo Joining
+for PART in `eval echo {1..$SPLITNUM}`;do
+  echo -n .
+  dd if=/tmp/$FILENAME.$PART of=$FILENAME bs=4M oflag=append conv=notrunc status=none
+done
 echo "Files done!"
 rm /tmp/$FILENAME.* 2> /dev/null
