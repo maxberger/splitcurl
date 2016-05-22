@@ -39,11 +39,7 @@ END=$CHUNK
 trap 'clean' SIGINT SIGTERM
  
 #Test splitness
-OUT=`curl -m 2 --range 0-0 $URL 2> /dev/null|while read -n 1 C;do
-  OUT="${OUT}½"
-  echo $OUT
-  [ ${#OUT} -gt 1 ] && break
-done`
+OUT=$(curl -m 5 --range 0-0 $URL 2> /dev/null|wc -c)
 #Check out
 case ${#OUT} in
 0)  clean;; #Curl error
