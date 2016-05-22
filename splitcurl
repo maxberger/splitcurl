@@ -12,7 +12,8 @@ function usage {
  
 #Cleanup on kill
 function clean {
-  kill 0
+  trap - SIGINT SIGTERM
+  kill $(jobs -p) 2> /dev/null
   rm /tmp/$FILENAME.* 2> /dev/null
   echo "Download failed!"
   exit 1 
