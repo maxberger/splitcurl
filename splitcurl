@@ -59,7 +59,7 @@ done
  
 TIME=$((`date +%s`-1))
 function calc {
- GOTSIZE=$((`eval ls -l /tmp/$FILENAME.{1..$SPLITNUM} 2> /dev/null|awk 'BEGIN{SUM=0}{SUM=SUM+$5}END{print SUM}'`))
+ GOTSIZE=$((`eval ls -l /tmp/$FILENAME.{1..$SPLITNUM} 2> /dev/null|awk 'BEGIN{SUM=0}{SUM=SUM+$5}END{printf "%.0f",SUM}'`))
  TIMEDIFF=$(( `date +%s` - $TIME ))
  RATE=$(( ($GOTSIZE / $TIMEDIFF)/1024 ))
  PCT=$(( ($GOTSIZE*100) / $SIZE ))
